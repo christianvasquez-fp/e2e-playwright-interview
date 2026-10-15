@@ -36,7 +36,3 @@ After a headless run, an HTML report is generated automatically.
 4. Look for opportunities to refactor the code using best practices.
 5. Submit a Pull Request and perform a thorough code review highlighting the issues found and fixed.
 6. Only the `Login` tests require code changes. Both `Student` and `Contacts` only need code review opinions from you.
-
-## CI
-
-A GitHub Actions workflow (`.github/workflows/playwright.yml`) runs the test suite on every push and pull request.
