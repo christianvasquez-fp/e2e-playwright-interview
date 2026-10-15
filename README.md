@@ -4,7 +4,7 @@ End-To-End testing suite against [Automaty](https://automaty-gd3cb.ondigitalocea
 
 ## Getting started
 
-1. Make a copy of the `example.env` file and rename it to `.env` and setup the values that are missing.
+1. Make a copy of the `example.env` file and rename it to `.env` and setup the values that are missing. You can find the `BASE_URL` near the `About` section at the top right hand side of the code explorer on GitHub.
 2. Install dependencies:
 
 ```bash
