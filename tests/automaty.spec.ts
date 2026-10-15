@@ -72,34 +72,78 @@ test.describe('Automaty', () => {
       await page.waitForTimeout(1000);
 
       await expect(page.getByText(/There are no contacts to show/i)).toBeVisible();
+      await expect(page.getByRole('button', {name: 'Upload'})).toBeEnabled();
+      await expect(page.getByRole('button', {name: 'Clear'})).toBeDisabled();
 
-      const csvContent = [
-        'id, name, phone, email',
-        '1, John, +1 (809) 555-5555, john@gmail.com',
-        '2, Juan, +1 (809) 222-2222, juan@aol.com',
-        '3, Joseph, +1 (809) 333-3333, joseph@hotmail.com',
-      ].join('\n');
+      const downloadPromise = page.waitForEvent('download');
+      await page.getByRole('link', {name: 'here'}).click();
+      const download = await downloadPromise;
+      const sampleCsvPath = test.info().outputPath(download.suggestedFilename());
+      await download.saveAs(sampleCsvPath);
 
       const fileChooserPromise = page.waitForEvent('filechooser');
       await page.getByRole('button', {name: 'Upload'}).click();
       const fileChooser = await fileChooserPromise;
-      await fileChooser.setFiles({
-        name: 'contacts.csv',
-        mimeType: 'text/csv',
-        buffer: Buffer.from(csvContent),
-      });
+      await fileChooser.setFiles(sampleCsvPath);
 
       await expect(page.locator('tbody tr')).toHaveCount(3);
-      await expect(page.locator('tbody tr').first()).toContainText('John');
+      await expect(page.getByRole('button', {name: 'Upload'})).toBeDisabled();
+      await expect(page.getByRole('button', {name: 'Clear'})).toBeEnabled();
 
-      await page.locator('thead th').nth(1).click();
-      await expect(page.locator('tbody tr').first()).toContainText('John');
+      // Default sort: ID ascending (1: John, 2: Juan, 3: Joseph)
+      await expect(page.locator('tbody tr').nth(0)).toContainText('1');
+      await expect(page.locator('tbody tr').nth(0)).toContainText('John');
+      await expect(page.locator('tbody tr').nth(0)).toContainText('+1 (809) 555-5555');
+      await expect(page.locator('tbody tr').nth(0)).toContainText('john@gmail.com');
+      await expect(page.locator('tbody tr').nth(1)).toContainText('Juan');
+      await expect(page.locator('tbody tr').nth(2)).toContainText('Joseph');
 
+      // Sort by ID descending (3: Joseph, 2: Juan, 1: John)
+      await page.locator('thead th').nth(0).click();
+      await expect(page.locator('tbody tr').nth(0)).toContainText('Joseph');
+      await expect(page.locator('tbody tr').nth(1)).toContainText('Juan');
+      await expect(page.locator('tbody tr').nth(2)).toContainText('John');
+
+      // Sort by NAME ascending (John, Joseph, Juan)
       await page.locator('thead th').nth(1).click();
-      await expect(page.locator('tbody tr').first()).toContainText('Juan');
+      await expect(page.locator('tbody tr').nth(0)).toContainText('John');
+      await expect(page.locator('tbody tr').nth(1)).toContainText('Joseph');
+      await expect(page.locator('tbody tr').nth(2)).toContainText('Juan');
+
+      // Sort by NAME descending (Juan, Joseph, John)
+      await page.locator('thead th').nth(1).click();
+      await expect(page.locator('tbody tr').nth(0)).toContainText('Juan');
+      await expect(page.locator('tbody tr').nth(1)).toContainText('Joseph');
+      await expect(page.locator('tbody tr').nth(2)).toContainText('John');
+
+      // Sort by PHONE ascending (+1 (809) 222-2222 -> Juan, 333-3333 -> Joseph, 555-5555 -> John)
+      await page.locator('thead th').nth(2).click();
+      await expect(page.locator('tbody tr').nth(0)).toContainText('+1 (809) 222-2222');
+      await expect(page.locator('tbody tr').nth(1)).toContainText('+1 (809) 333-3333');
+      await expect(page.locator('tbody tr').nth(2)).toContainText('+1 (809) 555-5555');
+
+      // Sort by PHONE descending (+1 (809) 555-5555 -> John, 333-3333 -> Joseph, 222-2222 -> Juan)
+      await page.locator('thead th').nth(2).click();
+      await expect(page.locator('tbody tr').nth(0)).toContainText('+1 (809) 555-5555');
+      await expect(page.locator('tbody tr').nth(1)).toContainText('+1 (809) 333-3333');
+      await expect(page.locator('tbody tr').nth(2)).toContainText('+1 (809) 222-2222');
+
+      // Sort by EMAIL ascending (john@gmail.com, joseph@hotmail.com, juan@aol.com)
+      await page.locator('thead th').nth(3).click();
+      await expect(page.locator('tbody tr').nth(0)).toContainText('john@gmail.com');
+      await expect(page.locator('tbody tr').nth(1)).toContainText('joseph@hotmail.com');
+      await expect(page.locator('tbody tr').nth(2)).toContainText('juan@aol.com');
+
+      // Sort by EMAIL descending (juan@aol.com, joseph@hotmail.com, john@gmail.com)
+      await page.locator('thead th').nth(3).click();
+      await expect(page.locator('tbody tr').nth(0)).toContainText('juan@aol.com');
+      await expect(page.locator('tbody tr').nth(1)).toContainText('joseph@hotmail.com');
+      await expect(page.locator('tbody tr').nth(2)).toContainText('john@gmail.com');
 
       await page.getByRole('button', {name: 'Clear'}).click();
       await expect(page.getByText(/There are no contacts to show/i)).toBeVisible();
+      await expect(page.getByRole('button', {name: 'Upload'})).toBeEnabled();
+      await expect(page.getByRole('button', {name: 'Clear'})).toBeDisabled();
     });
 
     test('should show validation errors when uploading invalid contacts csv', async ({page}) => {
