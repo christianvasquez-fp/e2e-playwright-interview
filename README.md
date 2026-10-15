@@ -35,16 +35,7 @@ After a headless run, an HTML report is generated automatically.
 3. Fix all bugs, flaky tests, and anti-patterns across the test suite and Page Objects.
 4. Look for opportunities to refactor the code using best practices.
 5. Submit a Pull Request and perform a thorough code review highlighting the issues found and fixed.
-
-## Project structure
-
-Tests follow the [Page Object Model](https://playwright.dev/docs/pom) pattern:
-
-```
-├── page-objects/   # Page objects (e.g., Login)
-├── tests/          # Test specs (e.g., automaty.spec.ts)
-└── playwright.config.ts
-```
+6. Only the `Login` tests require code changes. Both `Student` and `Contacts` only need code review opinions from you.
 
 ## CI
 
