@@ -20,10 +20,10 @@ pnpm install
 pnpm test
 
 # Repeat tests 10 times to detect flakiness
-pnpm run test:flaky
+pnpm test:flaky
 
 # Interactive UI mode
-pnpm run gui
+pnpm gui
 ```
 
 After a headless run, an HTML report is generated automatically.
