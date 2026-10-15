@@ -8,7 +8,7 @@ End-To-End testing suite against [Automaty](https://automaty-gd3cb.ondigitalocea
 2. Install dependencies:
 
 ```bash
-bun install
+pnpm install
 ```
 
 3. Install the official Playwright [extension](https://marketplace.visualstudio.com/items?itemName=ms-playwright.playwright).
@@ -17,13 +17,13 @@ bun install
 
 ```bash
 # Headless run
-bun run test
+pnpm test
 
 # Repeat tests 10 times to detect flakiness
-bun run test:flaky
+pnpm run test:flaky
 
 # Interactive UI mode
-bun run gui
+pnpm run gui
 ```
 
 After a headless run, an HTML report is generated automatically.
@@ -31,7 +31,7 @@ After a headless run, an HTML report is generated automatically.
 ## Interview Instructions
 
 1. Fork this repository.
-2. Run the test suite (`bun run test` and `bun run test:flaky`) to identify failing and flaky tests.
+2. Run the test suite (`pnpm test` and `pnpm run test:flaky`) to identify failing and flaky tests.
 3. Fix all bugs, flaky tests, and anti-patterns across the test suite and Page Objects.
 4. Refactor the `Students` and `Contacts` test suites to properly follow the [Page Object Model](https://playwright.dev/docs/pom) pattern.
 5. Submit a Pull Request and perform a thorough code review highlighting the issues found and fixed.
