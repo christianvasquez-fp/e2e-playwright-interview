@@ -1,6 +1,6 @@
-# End-To-End Playwright
+# End-To-End Playwright Interview
 
-Demonstration project to show how to use Playwright for End-To-End testing against [Automaty](https://automaty-gd3cb.ondigitalocean.app/).
+End-To-End testing suite against [Automaty](https://automaty-gd3cb.ondigitalocean.app/) built with Playwright.
 
 ## Getting started
 
@@ -19,11 +19,22 @@ bun install
 # Headless run
 bun run test
 
+# Repeat tests 10 times to detect flakiness
+bun run test:flaky
+
 # Interactive UI mode
 bun run gui
 ```
 
 After a headless run, an HTML report is generated automatically.
+
+## Interview Instructions
+
+1. Fork this repository.
+2. Run the test suite (`bun run test` and `bun run test:flaky`) to identify failing and flaky tests.
+3. Fix all bugs, flaky tests, and anti-patterns across the test suite and Page Objects.
+4. Refactor the `Students` and `Contacts` test suites to properly follow the [Page Object Model](https://playwright.dev/docs/pom) pattern.
+5. Submit a Pull Request and perform a thorough code review highlighting the issues found and fixed.
 
 ## Project structure
 
