@@ -12,7 +12,7 @@ export class Login {
   async signIn(username: string, password: string) {
     await this.page.getByLabel('Username', {exact: true}).fill(username);
     await this.page.getByLabel('Password', {exact: true}).fill(password);
-    await this.page.getByRole('button', {name: 'Sign In'}).click();
+    this.page.getByRole('button', {name: 'Sign In'}).click();
   }
 
   get welcomeHeading() {
@@ -20,6 +20,6 @@ export class Login {
   }
 
   get alert() {
-    return this.page.getByText(/Invalid/i);
+    return this.page.getByText(/Wrong credentials/i);
   }
 }
