@@ -33,7 +33,7 @@ After a headless run, an HTML report is generated automatically.
 1. Fork this repository.
 2. Run the test suite (`pnpm test` and `pnpm run test:flaky`) to identify failing and flaky tests.
 3. Fix all bugs, flaky tests, and anti-patterns across the test suite and Page Objects.
-4. Refactor the `Students` and `Contacts` test suites to properly follow the [Page Object Model](https://playwright.dev/docs/pom) pattern.
+4. Look for opportunities to refactor the code using best practices.
 5. Submit a Pull Request and perform a thorough code review highlighting the issues found and fixed.
 
 ## Project structure
