@@ -20,7 +20,7 @@ pnpm install
 pnpm test
 
 # Repeat tests 10 times to detect flakiness
-pnpm test:flaky
+pnpm flaky
 
 # Interactive UI mode
 pnpm gui

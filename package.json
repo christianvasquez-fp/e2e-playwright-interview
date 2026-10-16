@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "playwright test",
-    "test:flaky": "playwright test --repeat-each=10",
+    "flaky": "playwright test --repeat-each=10",
     "gui": "playwright test --ui"
   },
   "keywords": [],
